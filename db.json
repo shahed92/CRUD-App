@@ -1,0 +1,43 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    },
+    {
+      "name": "Shahed Chowdhury",
+      "email": "shahed060592@gmail.com",
+      "number": "2134",
+      "position": "dfsdf",
+      "id": 2
+    },
+    {
+      "name": "tamim",
+      "email": "th@gmail.com",
+      "number": "01721938",
+      "position": "opener",
+      "id": 3
+    },
+    {
+      "name": "rahad",
+      "email": "asjkdfp",
+      "number": "1223",
+      "position": "jkfpasd",
+      "id": 4
+    }
+  ],
+  "profile": {
+    "name": "Shahed Chowdhury",
+    "email": "shahed060592@gmail.com",
+    "number": "2",
+    "position": "dfsdf"
+  }
+}

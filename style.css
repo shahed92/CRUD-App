@@ -56,3 +56,24 @@ input:focus {
   border-radius: 25rem;
   cursor: pointer;
 }
+
+/* read form */
+
+.single-person {
+  padding-top: 5px;
+  text-align: center;
+}
+.single-person p {
+  text-transform: capitalize;
+  padding: 5px 0px;
+  background-color: #e8f4f0;
+  display: flex;
+  justify-content: space-around;
+  width: 720px;
+  margin: auto;
+}
+
+strong,
+span {
+  padding: 0px 2px;
+}

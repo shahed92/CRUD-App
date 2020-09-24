@@ -6,7 +6,7 @@ const numberValue = document.querySelector('#number');
 const positionValue = document.querySelector('#position');
 const submitForm = document.querySelector('.submit');
 
-let url = 'http://localhost:3000/comments';
+let url = 'http://localhost:3000/person';
 ///submit form
 submitForm.addEventListener('click', (e) => {
   e.preventDefault();
@@ -55,5 +55,41 @@ submitForm.addEventListener('click', (e) => {
 
 fetch(url)
   .then((res) => res.json())
-  .then((data) => console.log(data.map((data) => data.name)))
+  .then((data) => {
+    readData(data);
+  })
   .catch((err) => console.log(err));
+
+// read data function
+
+function readData(data) {
+  let readDom = document.querySelector('.read-form');
+  let singlePerson = '';
+
+  data.forEach((person) => {
+    singlePerson += `<div class="single-person">
+      <p>
+        <strong class="id">${person.id} </strong><strong>name: </strong
+        ><span>${person.name}</span> <strong>email: </strong> <span>${person.email}</span>
+        <strong>number: </strong>
+        <span>${person.number}</span>
+        <button class="delete" id="${person.id}" >delete</button>
+      </p>
+    </div>`;
+  });
+  readDom.innerHTML = singlePerson;
+}
+
+/////delete post
+const formList = document.querySelector('.read-form');
+formList.addEventListener('click', (e) => {
+  let id = e.target.id;
+
+  if (id) {
+    fetch(`${url}/${id}`, {
+      method: 'DELETE',
+    });
+  }
+});
+
+////////////Edit and update post

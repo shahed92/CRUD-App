@@ -4,11 +4,16 @@ const nameValue = document.querySelector('#name');
 const emailValue = document.querySelector('#email');
 const numberValue = document.querySelector('#number');
 const positionValue = document.querySelector('#position');
-const submitForm = document.querySelector('.submit');
+const submitForm = document.querySelector('.form');
+let submitBtn = document.querySelector('.submitBtn');
+console.log(submitBtn);
+//parent p select
+const formList = document.querySelector('.read-form');
 
 let url = 'http://localhost:3000/person';
+
 ///submit form
-submitForm.addEventListener('click', (e) => {
+submitForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
   function personOBJ(name, email, number, position) {
@@ -25,13 +30,11 @@ submitForm.addEventListener('click', (e) => {
     positionValue.value
   );
 
-  /// clear the input values
+  //  /// clear the input values
   nameValue.value = '';
   emailValue.value = '';
   numberValue.value = '';
   positionValue.value = '';
-
-  //
 
   ///save to json server
 
@@ -68,28 +71,75 @@ function readData(data) {
 
   data.forEach((person) => {
     singlePerson += `<div class="single-person">
-      <p>
+      <p id="${person.id}">
         <strong class="id">${person.id} </strong><strong>name: </strong
-        ><span>${person.name}</span> <strong>email: </strong> <span>${person.email}</span>
+        ><span class="name">${person.name}</span> <strong>email: </strong> <span class="email">${person.email}</span>
         <strong>number: </strong>
-        <span>${person.number}</span>
-        <button class="delete" id="${person.id}" >delete</button>
+        <span class="number">${person.number}</span>
+        <strong>number: </strong>
+        <span class="position">${person.position}</span>
+        <button class="edit" id="edit" >edit</button>
+        <button class="delete" id="delete" >delete</button>
       </p>
     </div>`;
   });
   readDom.innerHTML = singlePerson;
 }
 
-/////delete post
-const formList = document.querySelector('.read-form');
-formList.addEventListener('click', (e) => {
-  let id = e.target.id;
+////delete post
 
-  if (id) {
+formList.addEventListener('click', (e) => {
+  let deleteBtn = e.target.id === 'delete';
+  let editBtn = e.target.id === 'edit';
+  let id = e.target.parentElement.id;
+  if (deleteBtn) {
     fetch(`${url}/${id}`, {
       method: 'DELETE',
     });
   }
+
+  ///edit and up date
+
+  if (editBtn) {
+    let name = e.target.parentElement.querySelector('.name').textContent;
+    let email = e.target.parentElement.querySelector('.email').textContent;
+    let number = e.target.parentElement.querySelector('.number').textContent;
+    let position = e.target.parentElement.querySelector('.position')
+      .textContent;
+
+    submitBtn.innerHTML = 'Update';
+
+    nameValue.value = name;
+    emailValue.value = email;
+    numberValue.value = number;
+    positionValue.value = position;
+
+    ///update
+    submitBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      ///patch
+      fetch(`${url}/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({
+          name: nameValue.value,
+          email: emailValue.value,
+          number: numberValue.value,
+
+          positiion: positionValue.value,
+        }),
+        headers: {
+          'content-type': 'application/json',
+        },
+      })
+        .then((res) => res.json())
+        .catch((err) => console.log(err));
+    });
+  }
+
+  ///update
 });
 
 ////////////Edit and update post
+// formList.addEventListener('click', (e)=>{
+
+// })
